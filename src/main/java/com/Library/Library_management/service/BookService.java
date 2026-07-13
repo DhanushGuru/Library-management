@@ -5,8 +5,9 @@ import com.Library.Library_management.repository.BookRepository;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.service;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookService{
 
     @Autowired
@@ -37,6 +38,7 @@ public class BookService{
     }
 
     public void deleteBook(Long id){
+        bookRepository.findById((id).orElseThrow(()->"Book not found with this id" + id));
         bookRepository.deleteById(id);
         // System.out.println("Successfully deleted the book with id" + id);
     }
