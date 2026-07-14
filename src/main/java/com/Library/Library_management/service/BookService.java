@@ -3,6 +3,7 @@ import com.Library.Library_management.entity.Book;
 import com.Library.Library_management.repository.BookRepository;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class BookService{
         return bookRepository.findAll();
     }
 
-    public Optional<Book> getBookById(){
+    public Optional<Book> getBookById(Long id){
         return bookRepository.findById(id);
     }
 
@@ -26,19 +27,20 @@ public class BookService{
     }
 
     public Book updateBook(Long id, Book updateBook){
-        Book existing = bookRepository.findById(id).orElseThrow(()->new RunTimeException("No book found with this id" + id));
+        Book existing = bookRepository.findById(id).orElseThrow(()->new RuntimeException("No book found with this id" + id));
         
         existing.setTitle(updateBook.getTitle());
         existing.setIsbn(updateBook.getIsbn());
         existing.setGenre(updateBook.getGenre());
-        existing.setTotalcopies(updateBook.getTotalcopies());
-        existing.setAvailablecopies(updateBook.getAvailablecopies());
+        existing.setTotalCopies(updateBook.getTotalCopies());
+        existing.setAvailableCopies(updateBook.getAvailableCopies());
 
         return bookRepository.save(existing);
     }
 
     public void deleteBook(Long id){
-        bookRepository.findById((id).orElseThrow(()->"Book not found with this id" + id));
+        bookRepository.findById(id)
+            .orElseThrow(()-> new RuntimeException("Book not found with this id" + id));
         bookRepository.deleteById(id);
         // System.out.println("Successfully deleted the book with id" + id);
     }
