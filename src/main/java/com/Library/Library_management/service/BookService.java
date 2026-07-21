@@ -1,13 +1,12 @@
 package com.Library.Library_management.service;
+
 import com.Library.Library_management.entity.Book;
 import com.Library.Library_management.repository.BookRepository;
-
-import java.util.Optional;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.Library.Library_management.exception.BookNotFoundException;
+import java.util.Optional;
+import java.util.List;
 @Service
 public class BookService{
 
@@ -27,7 +26,7 @@ public class BookService{
     }
 
     public Book updateBook(Long id, Book updateBook){
-        Book existing = bookRepository.findById(id).orElseThrow(()->new RuntimeException("No book found with this id" + id));
+        Book existing = bookRepository.findById(id).orElseThrow(()->new BookNotFoundException(id));
         
         existing.setTitle(updateBook.getTitle());
         existing.setIsbn(updateBook.getIsbn());
@@ -40,7 +39,7 @@ public class BookService{
 
     public void deleteBook(Long id){
         bookRepository.findById(id)
-            .orElseThrow(()-> new RuntimeException("Book not found with this id" + id));
+            .orElseThrow(()-> new BookNotFoundException(id));
         bookRepository.deleteById(id);
         // System.out.println("Successfully deleted the book with id" + id);
     }
