@@ -1,9 +1,12 @@
 package com.Library.Library_management.entity;
 
 // import java.lang.annotation.Inherited;
-
 // import javax.annotation.processing.Generated;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,19 +16,28 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
+    @NotBlank(message = "Title must not be empty")
+    @Size(min=1, max = 255, message = "Title must be between 1 to 255 charectars")
     @Column(nullable = false)
     private String title;
 
+    @NotBlank(message = "ISBN must not be empty")
+    @Size(min = 10, max = 20, message = "Isbn must be between 10 to 20 charectars")
     @Column(nullable = false, unique = true)
     private String isbn;
 
+    @NotBlank(message = "genre must not be empty")
     private String genre;
 
-    private int totalCopies;
+    @NotNull(message = "Totalcopies must not be null")
+    @Min(value = 1,message = "Total copies must be at least 1")
+    private Integer totalCopies;
 
-    private int availableCopies;
+    @NotNull(message = "AvailableCopies must not be null")
+    @Min(value=0, message = "AvailableCopies cannot be negative")
+    private Integer availableCopies;
 
     public Book() {
         // This one is required by Hibernate,
@@ -74,7 +86,7 @@ public class Book {
         this.genre = genre;
     }
 
-    public int getTotalCopies() {
+    public Integer getTotalCopies() {
         return totalCopies;
     }
 
@@ -82,7 +94,7 @@ public class Book {
         this.totalCopies = totalCopies;
     }
 
-    public int getAvailableCopies() {
+    public Integer getAvailableCopies() {
         return availableCopies;
     }
 

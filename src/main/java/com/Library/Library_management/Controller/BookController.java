@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,12 +32,12 @@ import java.util.Optional;
         }
 
         @PostMapping()
-        public ResponseEntity<Book> addBook(@RequestBody Book book){
+        public ResponseEntity<Book> addBook(@Valid @RequestBody Book book){
             Book savedBook = bookService.addBook(book);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
         }
         @PutMapping("/{id}")
-        public ResponseEntity<Book> updateBook(@PathVariable Long id,@RequestBody Book book){
+        public ResponseEntity<Book> updateBook(@PathVariable Long id,@Valid @RequestBody Book book){
             Book updateBook = bookService.updateBook(id,book);
             return ResponseEntity.ok(updateBook);
         }
