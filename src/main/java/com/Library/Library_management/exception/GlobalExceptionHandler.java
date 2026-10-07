@@ -18,6 +18,12 @@ public class GlobalExceptionHandler{
             ex.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+    @ExceptionHandler(AuthorNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAuthorNotFoundError(AuthorNotFoundException ex){
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex){
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),ex.getMessage());
@@ -37,4 +43,5 @@ public class GlobalExceptionHandler{
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),"Validation_Error" + FieldErrors.toString());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+    
 }

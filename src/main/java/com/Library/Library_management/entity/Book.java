@@ -1,13 +1,7 @@
 package com.Library.Library_management.entity;
 
-// import java.lang.annotation.Inherited;
-// import javax.annotation.processing.Generated;
-
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.*;
+import com.Library.Library_management.entity.*;
 
 @Entity
 @Table(name = "books")
@@ -18,26 +12,21 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Title must not be empty")
-    @Size(min=1, max = 255, message = "Title must be between 1 to 255 charectars")
     @Column(nullable = false)
     private String title;
 
-    @NotBlank(message = "ISBN must not be empty")
-    @Size(min = 10, max = 20, message = "Isbn must be between 10 to 20 charectars")
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @NotBlank(message = "genre must not be empty")
     private String genre;
 
-    @NotNull(message = "Totalcopies must not be null")
-    @Min(value = 1,message = "Total copies must be at least 1")
     private Integer totalCopies;
 
-    @NotNull(message = "AvailableCopies must not be null")
-    @Min(value=0, message = "AvailableCopies cannot be negative")
     private Integer availableCopies;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "authorID")
+    private Author author;
 
     public Book() {
         // This one is required by Hibernate,
@@ -100,5 +89,13 @@ public class Book {
 
     public void setAvailableCopies(int availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }
