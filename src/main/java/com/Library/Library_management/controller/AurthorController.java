@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.Library.Library_management.dto.AuthorRequestDTO;
 import com.Library.Library_management.dto.AuthorResponseDTO;
-import com.Library.Library_management.entity.Author;
+// import com.Library.Library_management.entity.Author;
 import com.Library.Library_management.service.AuthorService;
 
 import jakarta.validation.Valid;

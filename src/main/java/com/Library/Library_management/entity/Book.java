@@ -1,7 +1,7 @@
 package com.Library.Library_management.entity;
 
 import jakarta.persistence.*;
-import com.Library.Library_management.entity.*;
+// import com.Library.Library_management.entity.*;
 
 @Entity
 @Table(name = "books")

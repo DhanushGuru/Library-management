@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.Map;
+
+//  HANDLES what to do when error occurs
+// Catches the error object
+// Reads the message and builds response
 
 @RestControllerAdvice
 public class GlobalExceptionHandler{
@@ -20,6 +26,11 @@ public class GlobalExceptionHandler{
     }
     @ExceptionHandler(AuthorNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleAuthorNotFoundError(AuthorNotFoundException ex){
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    @ExceptionHandler(MemberNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMemberNotFoundError(MemberNotFoundException ex){
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
@@ -45,3 +56,6 @@ public class GlobalExceptionHandler{
     }
     
 }
+
+
+
